@@ -15,10 +15,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DavePujan/prometheus-auto-instrument.git"
+    "url": "git+https://github.com/DavePujan/prometheus-auto-instrument.git"
   },
   "bin": {
-    "prom-auto": "./bin/cli.js"
+    "prom-auto": "bin/cli.js"
   },
   "exports": {
     ".": "./src/index.js",
