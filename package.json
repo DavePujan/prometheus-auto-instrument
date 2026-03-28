@@ -23,7 +23,8 @@
   "exports": {
     ".": "./src/index.js",
     "./plugins/mongo": "./src/plugins/mongo.js",
-    "./plugins/redis": "./src/plugins/redis.js"
+    "./plugins/redis": "./src/plugins/redis.js",
+    "./plugins/otel": "./src/plugins/otel.js"
   },
   "scripts": {
     "start:test": "node test-app.js",
@@ -39,6 +40,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@opentelemetry/api": "^1.9.1",
     "express": "^5.2.1",
     "on-finished": "^2.4.1",
     "prom-client": "^15.1.3"

@@ -108,8 +108,17 @@ function askForConfirmation(question) {
 }
 
 async function run() {
+  if (cmd === "dashboard") {
+    const dashboardPath = path.join(__dirname, "../dashboards/default.json");
+    console.log("Grafana Dashboard JSON:\n");
+    console.log(fs.readFileSync(dashboardPath, "utf-8"));
+    console.log("\nImport this into Grafana -> Dashboards -> Import");
+    return;
+  }
+
   if (cmd !== "init") {
     console.log("Usage: prom-auto init [--dry-run] [--yes] [--entry <path>]");
+    console.log("       prom-auto dashboard");
     return;
   }
 

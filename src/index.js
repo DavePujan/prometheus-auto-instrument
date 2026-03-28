@@ -2,6 +2,7 @@ const createMonitoringMiddleware = require("./middleware");
 const { register } = require("./metrics");
 const { instrumentMongo } = require("./plugins/mongo");
 const { instrumentRedis } = require("./plugins/redis");
+const { instrumentOtel } = require("./plugins/otel");
 
 function autoDetectMongo(autoDetect) {
   if (!autoDetect.mongo) {
@@ -41,11 +42,22 @@ function autoDetectRedis(app, autoDetect) {
   }
 }
 
+function autoDetectOtel(app, autoDetect) {
+  if (!autoDetect.otel) {
+    return;
+  }
+
+  const otelMiddleware = instrumentOtel();
+  if (typeof otelMiddleware === "function") {
+    app.use(otelMiddleware);
+  }
+}
+
 function init({
   app,
   metricsPath = "/metrics",
   ignoreRoutes = [],
-  autoDetect = { mongo: true, redis: true },
+  autoDetect = { mongo: true, redis: true, otel: false },
   anomalyDetection = { enabled: false }
 } = {}) {
   if (!app || typeof app.use !== "function" || typeof app.get !== "function") {
@@ -54,6 +66,7 @@ function init({
 
   autoDetectMongo(autoDetect);
   autoDetectRedis(app, autoDetect);
+  autoDetectOtel(app, autoDetect);
 
   const monitoringMiddleware = createMonitoringMiddleware({
     ignoreRoutes,
