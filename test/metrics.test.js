@@ -95,3 +95,32 @@ test("anomaly detection invokes callback on spikes", async () => {
 
   expect(onAnomaly).toHaveBeenCalled();
 });
+
+test("error counting includes both 4xx and 5xx", async () => {
+  const app = express();
+  monitor.init({ app, ignoreRoutes: ["/metrics"] });
+
+  app.get("/client-error", (req, res) => {
+    res.status(400).send("bad request");
+  });
+
+  app.get("/server-error", (req, res) => {
+    res.status(500).send("internal error");
+  });
+
+  app.get("/success", (req, res) => {
+    res.status(200).send("ok");
+  });
+
+  await request(app).get("/client-error");
+  await request(app).get("/server-error");
+  await request(app).get("/success");
+
+  const res = await request(app).get("/metrics");
+
+  expect(res.text).toContain("http_errors_total");
+  // Should have errors from both 400 and 500
+  const errorMatches = res.text.match(/http_errors_total{[^}]*status_code="[45]/g);
+  expect(errorMatches).not.toBeNull();
+  expect(errorMatches.length).toBeGreaterThan(0);
+});

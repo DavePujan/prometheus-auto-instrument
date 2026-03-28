@@ -1,6 +1,6 @@
 {
   "name": "prometheus-auto-instrument",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Zero-config Prometheus instrumentation for Node.js",
   "main": "src/index.js",
   "type": "commonjs",
@@ -9,7 +9,9 @@
     "bin",
     "ui",
     "dashboards",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
   ],
   "engines": {
     "node": ">=16"
@@ -29,6 +31,7 @@
   },
   "scripts": {
     "start:test": "node test-app.js",
+    "traffic:watch": "node scripts/traffic-watch.js",
     "test": "jest --runInBand",
     "release": "standard-version"
   },
@@ -42,6 +45,7 @@
   "license": "MIT",
   "dependencies": {
     "@opentelemetry/api": "^1.9.1",
+    "chart.js": "^4.4.0",
     "express": "^5.2.1",
     "on-finished": "^2.4.1",
     "prom-client": "^15.1.3",

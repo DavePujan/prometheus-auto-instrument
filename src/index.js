@@ -3,6 +3,7 @@ const { register } = require("./metrics");
 const { instrumentMongo } = require("./plugins/mongo");
 const { instrumentRedis } = require("./plugins/redis");
 const { instrumentOtel } = require("./plugins/otel");
+const { setupDashboard } = require("./dashboard");
 
 function autoDetectMongo(autoDetect) {
   if (!autoDetect.mongo) {
@@ -91,5 +92,6 @@ function init({
 
 module.exports = {
   init,
-  register
+  register,
+  setupDashboard
 };

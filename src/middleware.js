@@ -49,7 +49,7 @@ function createMonitoringMiddleware(options = {}) {
       httpRequestDuration.observe(labels, duration);
       httpRequestCount.inc(labels);
 
-      if (res.statusCode >= 500) {
+      if (res.statusCode >= 400) {
         httpErrors.inc(labels);
       }
 
