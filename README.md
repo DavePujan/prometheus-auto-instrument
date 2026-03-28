@@ -2,6 +2,8 @@
 
 > Zero-config Prometheus monitoring for Node.js
 
+## Try and test this package with this example repo: https://github.com/DavePujan/prometheus-demo-repo
+
 ## Install
 
 ```bash
